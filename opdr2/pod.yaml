@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ping-pong
+  labels:
+    app: ping-pong
+spec:
+  containers:
+  - name: ping-pong
+    image: ninckblokje/ping-pong:golang
+    ports:
+      - containerPort: 8080
