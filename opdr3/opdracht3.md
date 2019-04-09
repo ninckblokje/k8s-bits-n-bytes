@@ -48,3 +48,11 @@ ping-pong   LoadBalancer   10.245.199.113   174.138.105.153   80:32656/TCP   2m4
 ![](../assets/do-service-lbr.png)
 
 Open nu de URL: http://[EXTERNAL_IP]/[ping]
+
+4. Ruim alles weer op
+
+````
+$ kubectl delete -n ninckblokje --all po,svc
+pod "ping-pong" deleted
+service "ping-pong" deleted
+````
