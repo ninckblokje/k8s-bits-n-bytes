@@ -1,106 +1,50 @@
-# Opdracht 4: Configuratie
+# Opdracht 4: Deployment
 
-1. Deploy Postgres
+Achtergrond informatie: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
-Dit maakt zowel een Pod als een Service aan.
-
-````
-$ kubectl apply -n ninckblokje postgres.yaml
-pod/postgres created
-service/postgres created
-````
-
-2. Deploy nu who-was-here
+Verwijder de oude pods:
 
 ````
-$ kubectl apply -n ninckblokje -f who-was-here.yaml
-pod/who-was-here created
+$ kubectl delete -n ninckblokje po --all
 ````
 
-Deze maakt nu verbinding met een H2 database.
+Start de deployment:
 
 ````
-$ kubectl port-forward -n ninckblokje po/who-was-here 8080:8080
-$ curl http://localhost:8080/here
-[]
-$ curl -X POST http://localhost:8080/here/jnb
-$ curl http://localhost:8080/here
-[{"dateTime":"2019-04-09T18:15:25.241","name":"jnb"}]
+$ kubectl apply -n ninckblokje -f deployment.yaml
 ````
 
-Herstart de container en de data is weg
+Hoeveel pods zijn er? Ziet de service de pods?
+
+Schaal de pod op naar 3:
 
 ````
-$ kubectl exec -n ninckblokje who-was-here reboot
-$ kubectl port-forward -n ninckblokje po/who-was-here 8080:8080
-$ curl http://localhost:8080/here
-[]
+$ kubectl scale -n ninckblokje deploy/ping-pong --replicas=3
 ````
 
-3. Aanmaken config map
+Hoeveel pods zijn er? Ziet de service de pods?
+
+Maak een kopie van het bestand `deployment.yaml` genaamd: `deployment-upgrade.yaml`. Verander hier het volgende in:
+
+- De nieuwe image wordt: `ninckblokje/ping-pong:node-express`
+- Onder spec moet de upgrade strategy worden toegevoegd:
 
 ````yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: who-was-here
-data:
-  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-  SPRING_DATASOURCE_USERNAME: postgres
-  SPRING_DATASOURCE_PASSWORD: Dummy_123
+...
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 1
+...
 ````
 
-Deploy de config map
+Voer nu de upgrade uit (deze gaat snel). Er zijn nu tijdelijk 2 replicatie sets
+
+Kill nu 1 pod, wat gebeurt er?
 
 ````
-$ kubectl apply -n ninckblokje -f configmap.yaml
-configmap/who-was-here created
-````
-
-Deploy de aangepaste pod:
-
-````
-$ kubectl delete -n ninckblokje po/who-was-here
-$ kubectl apply -n ninckblokje -f who-was-here-cm.yaml
-````
-
-````
-$ kubectl port-forward -n ninckblokje po/who-was-here 8080:8080
-$ curl http://localhost:8080/here
-[]
-$ curl -X POST http://localhost:8080/here/jnb
-$ curl http://localhost:8080/here
-[{"dateTime":"2019-04-09T18:47:17.331","name":"jnb"}]
-$ kubectl exec -n ninckblokje who-was-here reboot
-$ kubectl port-forward -n ninckblokje po/who-was-here 8080:8080
-$ curl http://localhost:8080/here
-[{"dateTime":"2019-04-09T18:47:17.331","name":"jnb"}]
-````
-
-4. Secrets
-
-Secrets horen los van de reguliere configuratie te staan. Maak een secret aan met dezelfde waarden als de config map
-
-````yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: who-was-here
-type: Opaque
-stringData:
-  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-  SPRING_DATASOURCE_USERNAME: postgres
-  SPRING_DATASOURCE_PASSWORD: Dummy_123
-````
-
-Deploy de aangepaste pod en config map:
-
-````
-$ kubectl delete -n ninckblokje po/who-was-here
-$ kubectl delete -n ninckblokje cm/who-was-here
-$ kubectl apply -n ninckblokje -f secret.yaml
-$ kubectl apply -n ninckblokje -f who-was-here-secrets.yaml
-$ kubectl port-forward -n ninckblokje po/who-was-here 8080:8080
-$ curl http://localhost:8080/here
-[{"dateTime":"2019-04-09T18:47:17.331","name":"jnb"}]
+$ kubectl get -n ninckblokje po
+$ kubectl delete -n ninckblokje po/ping-pong-7dd8c58b58-dp565
+$ kubectl get -n ninckblokje po
 ````

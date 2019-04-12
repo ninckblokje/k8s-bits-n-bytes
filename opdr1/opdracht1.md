@@ -1,9 +1,19 @@
 # Opdracht 1: Namespace aanmaken
 
+Achtergrond informatie: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+
 Maak een eigen namespace aan:
-1. Pas het bestand `namespace.yaml` aan zodat `metadata.name` jouw naam bevat
-2. Apply de yaml met `kubectl apply -f namespace.yaml`
-3. Controleer of de namespace is aangemaakt met `kubectl get ns`
+- Pas het bestand `namespace.yaml` aan zodat `metadata.name` jouw naam bevat
+
+````yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ninckblokje
+````
+
+- Apply de yaml met `kubectl apply -f namespace.yaml`
+- Controleer of de namespace is aangemaakt met `kubectl get ns`
 
 ````
 NAME          STATUS   AGE

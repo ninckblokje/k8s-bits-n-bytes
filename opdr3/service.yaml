@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: ping-pong
 spec:
-  selector:
-    app: ping-pong
+  <selector-here>
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
     targetPort: 8080
+    name: http

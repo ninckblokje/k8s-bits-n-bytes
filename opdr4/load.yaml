@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong-load
+spec:
+  selector:
+    matchLabels:
+      app: ping-pong-load
+  template:
+    metadata:
+      labels:
+        app: ping-pong-load
+    spec:
+      containers:
+      - name: ping-pong-load
+        image: alpine:3.9.2
+        command: ["/bin/sh"]
+        args: ["-c", "apk add --update curl; while true; do curl http://ping-pong:80/ping; done"]
+  replicas: 10
