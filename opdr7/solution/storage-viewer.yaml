@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-viewer
+  labels:
+    name: storage-viewer
+spec:
+  containers:
+  - name: storage-viewer
+    image: centos:7.6.1810
+    command: ["/bin/bash"]
+    args: ["-c", "while true; do sleep 300; done;"]
+    volumeMounts:
+      - mountPath: "/var/lib/postgresql/data"
+        name: postgres-volume
+  volumes:
+    - name: postgres-volume
+      persistentVolumeClaim:
+        claimName: postgres-pvc
+        readOnly: true

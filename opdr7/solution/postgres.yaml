@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  containers:
+  - name: postgres
+    image: postgres:11
+    ports:
+      - containerPort: 5432
+    env:
+      - name: POSTGRES_PASSWORD
+        value: Dummy_123
+    volumeMounts:
+      - mountPath: "/var/lib/postgresql/data"
+        name: postgres-volume
+  volumes:
+    - name: postgres-volume
+      persistentVolumeClaim:
+        claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432

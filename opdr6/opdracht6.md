@@ -1,5 +1,7 @@
 # Opdracht 6: Probes
 
+Achtergrond informatie: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+
 De who-was-here applicatie heeft een lange opstart tijd nodig. Deploy who-was-here (nu via een deployment met daarbij een service) en controleer het via de health endpoints (van Spring Boot Actuator):
 
 ![](../assets/running-but-not-ready.png)
