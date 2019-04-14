@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: heater
+spec:
+  containers:
+    - name: heater
+      image: ninckblokje/heater
+      imagePullPolicy: Always
+      resources:
+        limits:
+          memory: 64Mi
+        requests:
+          memory: 64Mi
