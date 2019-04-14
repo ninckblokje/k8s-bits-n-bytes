@@ -52,3 +52,15 @@ ca.crt:     1156 bytes
 namespace:  11 bytes
 token:      [VERY_SECRET_TOKEN]
 ````
+
+## Traefik
+
+````
+$ kubectl apply -f traefik-np.yaml
+````
+
+Of
+
+````
+$ kubectl apply -f traefik-lbr.yaml
+````

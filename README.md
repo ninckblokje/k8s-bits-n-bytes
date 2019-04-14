@@ -50,8 +50,6 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 - [Opdracht 5: Configuratie](opdr5/opdracht5.md)
 - [Opdracht 6: Probes](opdr6/opdracht6.md)
 - [Opdracht 7: Opslag](opdr7/opdracht7.md)
-- Opdracht 8: Ingress
+- [Opdracht 8: Ingress](opdr8/opdracht8.md)
 - Opdracht 9: Jobs
 - [Opdracht 10: Resources](opdr10/opdracht10.md)
-- Opdracht 11: Debugging
-- Opdracht 12: Security

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ping-pong-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+spec:
+  rules:
+  - host: ninckblokje.bnb
+    http:
+      paths:
+      - path: /ninckblokje
+        backend:
+          serviceName: ping-pong
+          servicePort: 80
