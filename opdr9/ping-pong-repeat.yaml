@@ -1,0 +1,16 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ping-pong-repeat
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ping-pong-repeat
+            image: centos:7.6.1810
+            command: ["/bin/bash"]
+            args: ["-c", "yum install -y curl; curl http://ping-pong/ping"]
+          restartPolicy: Never
