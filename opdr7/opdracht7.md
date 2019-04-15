@@ -85,7 +85,6 @@ Storage kan automatisch worden aangemaakt bij het gebruik van een stateful set. 
 $ kubectl delete -n ninckblokje po/postgres
 $ kubectl delete -n ninckblokje pvc/postgres-pvc
 $ kubectl get -n ninckblokje pv
-$ kubectl delete -n ninckblokje pv/pvc-2a07fcdf-5dc3-11e9-91d0-00155d021822
 ````
 
 Het verwijderen van de pvc en pv gaat niet, omdat er nog een pod aan gekoppeld is. Delete eerst deze:
@@ -94,7 +93,6 @@ Het verwijderen van de pvc en pv gaat niet, omdat er nog een pod aan gekoppeld i
 $ kubectl delete -n ninckblokje po/storage-viewer
 $ kubectl delete -n ninckblokje pvc/postgres-pvc
 $ kubectl get ninckblokje pv
-$ kubectl delete pv/pvc-2a07fcdf-5dc3-11e9-91d0-00155d021822
 ````
 
 Deploy nu postgres via een stateful set:
