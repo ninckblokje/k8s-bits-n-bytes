@@ -28,12 +28,27 @@ Verander `postgres.yaml` zodat deze de persistant volume claim gebruikt. Voeg ee
 ````
 ...
     volumeMounts:
-      - mountPath: "/var/lib/postgresql/data"
+      - mountPath: "/var/lib/postgresql"
         name: postgres-volume
   volumes:
     - name: postgres-volume
       persistentVolumeClaim:
         claimName: postgres-pvc
+...
+````
+
+Voeg tevens een init container toe. Deze maakt een subdirectory en zet de rechten goed
+
+````yaml
+...
+      initContainers:
+        - name: postgres-volume-init
+          image: centos:7.6.1810
+          command: ["/bin/bash"]
+          args: ["-c", "mkdir /data/data; chown -R 777 /data"]
+          volumeMounts:
+          - name: postgres-volume
+            mountPath: /data
 ...
 ````
 

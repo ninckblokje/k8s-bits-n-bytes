@@ -5,6 +5,7 @@ metadata:
   labels:
     app: postgres
 spec:
+  <init-container>
   containers:
   - name: postgres
     image: postgres:11

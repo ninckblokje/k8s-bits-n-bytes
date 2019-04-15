@@ -1,5 +1,9 @@
 # Opdracht 9: Jobs
 
+Achtergrond informatie:
+- https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+- https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
 Deploy een eenmalige job:
 
 ````

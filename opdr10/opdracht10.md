@@ -1,5 +1,7 @@
 # Opdracht 10: Resources
 
+Achtergrond informatie: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+
 Deploy `heater.yaml` en volg de logging:
 
 ````
