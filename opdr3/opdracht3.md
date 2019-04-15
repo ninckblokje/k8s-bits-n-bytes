@@ -67,6 +67,6 @@ ping-pong   LoadBalancer   10.245.199.113   174.138.105.153   80:32656/TCP   2m4
 ````
 
 ![](../assets/k8s-service-lbr.png)
-![](../assets/do-service-lbr.png)
+![](../assets/do-service-lbr.PNG)
 
 Open nu de URL: http://[EXTERNAL_IP]/[ping]

@@ -52,6 +52,12 @@ Voeg tevens een init container toe. Deze maakt een subdirectory en zet de rechte
 ...
 ````
 
+![](../assets/k8s-pvc.png)
+
+![](../assets/k8s-pv.png)
+
+![](../assets/do-volume.png)
+
 Deploy Postgres opnieuw:
 
 ````
