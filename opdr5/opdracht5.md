@@ -88,7 +88,7 @@ Kopieer het bestand `who-was-here.yaml` naar `who-was-here-cm.yaml` en haal de o
 Deploy de aangepaste pod:
 
 ````
-$ kubectl delete -n ninckblokje po/who-was-here
+$ kubectl delete -n ninckblokje -f po/who-was-here
 $ kubectl apply -n ninckblokje -f who-was-here-cm.yaml
 ````
 
