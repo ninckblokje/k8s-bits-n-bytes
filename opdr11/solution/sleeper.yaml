@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sleeper
+  labels:
+    app: sleeper
+spec:
+  containers:
+  - name: sleeper
+    image: centos:7.6.1810
+    command: ["/bin/bash"]
+    args: ["-c", "while true; do sleep 300; done;"]
+  serviceAccountName: ninckblokje-pod-ro-sa
