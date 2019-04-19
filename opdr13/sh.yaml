@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sh
+  labels:
+    app: sh
+spec:
+  containers:
+  - name: sh
+    image: ninckblokje/crasher:sh
+  restartPolicy: Never

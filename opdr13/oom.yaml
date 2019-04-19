@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oom
+spec:
+  containers:
+    - name: oom
+      image: centos:7.6.1810
+      command: ["/bin/bash"]
+      args: ["-c", "yum install -y epel-release; yum install -y stress; stress --vm-bytes 65M -m 5"]
+      resources:
+        limits:
+          memory: 64Mi
+        requests:
+          memory: 64Mi
+  restartPolicy: Never

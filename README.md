@@ -55,12 +55,6 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 - [Opdracht 10: Resources](opdr10/opdracht10.md)
 - [Opdracht 11: RBAC](opdr11/opdracht11.md)
 - [Opdracht 12: K8S API mogelijkheden](opdr12/opdracht12.md)
-
-- Opdracht 11: Debugging pods (15 minuten)
-- Opdracht 12: Developing in K8S (15 minuten)
-- Opdracht 13: Build your own pod (30 minuten)
-
-- Opdracht 15: Kubernetes API (10 minuten)
-- Opdracht 16: Kustomize (10 minuten)
-- Opdracht 17: Helm (10 minuten)
-- Opdracht 18: Build your own chart (30 minuten)
+- [Opdracht 13: Debugging pods](opdr13/opdracht13.md)
+- Opdracht 14: Kustomize
+- Opdracht 15: Build your own!
