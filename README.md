@@ -57,4 +57,12 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 - [Opdracht 12: K8S API mogelijkheden](opdr12/opdracht12.md)
 - [Opdracht 13: Debugging pods](opdr13/opdracht13.md)
 - Opdracht 14: Kustomize
-- Opdracht 15: Build your own!
+- [Opdracht 15: Build your own!](opdr15/opdracht15.md)
+
+## Sources
+
+- https://github.com/ninckblokje/crasher
+- https://github.com/ninckblokje/heater
+- https://github.com/ninckblokje/ping-pong
+- https://github.com/ninckblokje/rate-training
+- https://github.com/ninckblokje/who-was-here-service
