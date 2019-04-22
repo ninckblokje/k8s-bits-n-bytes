@@ -64,3 +64,9 @@ Of
 ````
 $ kubectl apply -f traefik-lbr.yaml
 ````
+
+## Spring Cloud RBAC
+
+````
+$ kubectl apply -f spring-cloud-rbac.yaml
+````
