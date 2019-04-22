@@ -57,6 +57,7 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 - [Opdracht 12: K8S API mogelijkheden](opdr12/opdracht12.md)
 - [Opdracht 13: Debugging pods](opdr13/opdracht13.md)
 - [Opdracht 14: Build your own!](opdr14/opdracht14.md)
+- [Opdracht 15: Security](opdr15/opdracht15.md)
 
 ## Sources
 
