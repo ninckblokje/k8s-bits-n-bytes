@@ -57,3 +57,10 @@ Kenmerken
 - Ontsloten via een service, alleen binnen K8S cluster
 - Ontsloten via Ingress op port 80 op hostname rate-training.[NAMESPACE].bnb
   - Vervang [NAMESPACE] met je eigen namespace
+
+## Testen
+
+````
+$ curl -X POST -H "Host: rate-training.ninckblokje.bnb" -H "Content-Type: appication/json" -d '{ "rating": 10, "byWho": "ninckblokje" }' http://[INGRESS_EXTERNAL_URL]/rating/k8s%20bits%20n%20bytes
+$ curl -H "Host: rate-training.ninckblokje.bnb" http://[INGRESS_EXTERNAL_URL]/training
+````
