@@ -1,66 +1,105 @@
-# Opdracht 14: Build your own!
+# Opdracht 14: Security
 
-Maak de volgende opzet:
-- MongoDB
-- Mongo Express
-- Rate training
-
-## MongoDB
-
-Container:
-- Image: `mongo:4.0`
-- Port: `27017`
-- Link: https://hub.docker.com/_/mongo
-
-Variabelen:
-- MONGO_INITDB_ROOT_USERNAME=root
-- MONGO_INITDB_ROOT_PASSWORD
-  - Geheim wachtwoord
-
-Zorg voor storage in de directory: `/data/db`
-
-Kenmerken:
-- Eén instance
-- Ontsloten via service, alleen binnen K8S cluster
-- Storage in directory: `/data/db`
-
-## Mongo Express
-
-Container:
-- Image: `mongo-express`
-- Port: `8081`
-- Link: https://hub.docker.com/_/mongo-express
-
-Variabelen:
-- ME_CONFIG_MONGODB_SERVER
-  - Wijst naar MongoDB service
-- ME_CONFIG_MONGODB_ADMINUSERNAME=root
-- ME_CONFIG_MONGODB_ADMINPASSWORD
-  - Gelijk aan MONGO_INITDB_ROOT_PASSWORD
-
-Kenmerken:
-- Eén instance
-- Ontsloten via service, alleen binnen K8S cluster
-
-## Rate training
-
-Container:
-- Image: `ninckblokje/ratetraining:1.0.0`
-- Port: `8080`
-
-Variabelen:
-- SPRING_DATA_MONGODB_URI=mongodb://root:[Wachtwoord MongoDB]@[MongoDB Service]:27017/training?authSource=admin
-  - Vervang [Wachtwoord MongoDB] en [MongoDB Service] met de juiste waarden
-
-Kenmerken
-- Twee instances
-- Ontsloten via een service, alleen binnen K8S cluster
-- Ontsloten via Ingress op port 80 op hostname rate-training.[NAMESPACE].bnb
-  - Vervang [NAMESPACE] met je eigen namespace
-
-## Testen
+Deploy `run-as.yaml`, start en shell en type het commando `id`:
 
 ````
-$ curl -X POST -H "Host: rate-training.ninckblokje.bnb" -H "Content-Type: appication/json" -d '{ "rating": 10, "byWho": "ninckblokje" }' http://[INGRESS_EXTERNAL_URL]/rating/k8s%20bits%20n%20bytes
-$ curl -H "Host: rate-training.ninckblokje.bnb" http://[INGRESS_EXTERNAL_URL]/training
+$ kubectl exec -it -n ninckblokje run-as /bin/sh
+/ # id
+uid=0(root) gid=0(root) groups=10(wheel
+/ # cd /data
+/data # ls -l
+total 4
+drwxrwsrwx    2 root     root          4096 Apr 22 14:45 demo
+/data # ping www.syntouch.nl
+PING www.syntouch.nl (185.104.29.56): 56 data bytes
 ````
+
+Breidt `run-as.yaml` nu uit met een `securityContext`:
+
+````yaml
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
+````
+
+````
+$ kubectl exec -it -n ninckblokje run-as /bin/sh
+/ # id
+uid=0(root) gid=0(root) groups=10(wheel
+/ # cd /data
+/data # ls -l
+total 4
+drwxrwsrwx    2 root     2000          4096 Apr 22 14:45 demo
+/data # ping www.syntouch.nl
+PING www.syntouch.nl (185.104.29.56): 56 data bytes
+ping: permission denied (are you root?)
+````
+
+Doe nu in de pod een wget van https://www.syntouch.nl:
+
+````
+/ # wget https://www.syntouch.nl
+Connecting to www.syntouch.nl (185.104.29.56:443)
+wget: note: TLS certificate validation not implemented
+index.html           100% |**************************************************************************************************************************************************| 92815  0:00:00 ETA
+/ # wget http://mongodb:27017/actuator/health
+Connecting to mongodb:27017 (10.245.43.21:27017)
+health               100% |**************************************************************************************************************************************************|    85  0:00:00 ETA
+````
+
+Maak een policy aan om verkeer naar buiten het cluster te blokkeren in het bestand `deny-external-egress.yaml`:
+
+````yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-external-egress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector: {}
+````
+
+Doe nog een wget naar https://www.syntouch.nl:
+
+````
+/ # wget https://www.syntouch.nl
+Connecting to www.syntouch.nl (185.104.29.56:443)
+wget: can't connect to remote host (185.104.29.56): Connection timed out
+````
+
+Andere pods zijn wel te bereiken:
+
+````
+/ # wget http://mongodb:27017/actuator/health
+Connecting to mongodb:27017 (10.245.43.21:27017)
+health               100% |**************************************************************************************************************************************************|    85  0:00:00 ETA
+````
+
+Het is eenvoudig om de Docker daemon beschikbaar te stellen in een pod, via de Docker socket. Pas het bestand `docker.yaml` aan zodat een volume (wijst naar de Docker socket) beschikbaar komt:
+
+````yaml
+...
+    volumeMounts:
+      - name: dockersock
+        mountPath: "/var/run/docker.sock"
+  volumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock
+...
+````
+
+Deploy de pod, start een shell en doe een `docker ps`:
+
+````
+$ kubectl exec -it -n ninckblokje docker /bin/sh
+/ # docker ps
+...
+````
+
+Nu zijn alle containers (inclusief de containers die draaien op de host) zichtbaar en beheerbaar vanuit deze pod.

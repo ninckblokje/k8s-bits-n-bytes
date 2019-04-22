@@ -53,11 +53,11 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 - [Opdracht 8: Ingress](opdr8/opdracht8.md)
 - [Opdracht 9: Jobs](opdr9/opdracht9.md)
 - [Opdracht 10: Resources](opdr10/opdracht10.md)
-- [Opdracht 11: RBAC](opdr11/opdracht11.md)
-- [Opdracht 12: K8S API mogelijkheden](opdr12/opdracht12.md)
-- [Opdracht 13: Debugging pods](opdr13/opdracht13.md)
-- [Opdracht 14: Build your own!](opdr14/opdracht14.md)
-- [Opdracht 15: Security](opdr15/opdracht15.md)
+- [Opdracht 11: Debugging pods](opdr11/opdracht11.md)
+- [Opdracht 12: RBAC](opdr12/opdracht12.md)
+- [Opdracht 13: K8S API mogelijkheden](opdr13/opdracht13.md)
+- [Opdracht 14: Security](opdr14/opdracht14.md)
+- [Opdracht 15: Build your own!](opdr15/opdracht15.md)
 
 ## Sources
 
