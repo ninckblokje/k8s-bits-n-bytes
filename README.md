@@ -41,6 +41,8 @@ De eerste keer moet een token worden ingevoerd. Gebruik hiervoor de inhoud van h
 
 ## Slides
 
+De slides zijn hier te vinden: https://www.slideshare.net/ninckblokje/kubernetes-bits-n-bytes/
+
 ## Opdrachten
 
 - [Opdracht 1: Namespace aanmaken](opdr1/opdracht1.md)

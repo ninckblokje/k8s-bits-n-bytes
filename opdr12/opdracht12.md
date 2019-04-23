@@ -8,7 +8,7 @@ Achtergrond informatie:
 Delete de andere resources uit je namespace:
 
 ````
-$ kubectl delete -n ninckblokje po,svc,cm,secret,ingress --all
+$ kubectl delete -n ninckblokje po,svc,cm,secret,ingress,deploy,job,cronjob --all
 ````
 
 Deploy de sleeper pod en start bash:
